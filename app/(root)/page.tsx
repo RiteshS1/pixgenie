@@ -40,19 +40,17 @@ const Home = async ({ searchParams }: SearchParamProps) => {
           page={page}
         />
       </section>
-{/* 
-      <footer className="mt-10 text-center p-16-semibold "> Made with 💖 by <a href="https://github.com/RiteshS1" className="text-xl text-orange-400 hover:text-white " >RS</a></footer> */}
-         <footer className="mt-10 text-center flex flex-col items-center gap-2">
+      <footer className="mt-10 text-center flex flex-col items-center gap-2">
   <div>
- 
+  
     <a 
     href="https://www.producthunt.com/posts/pixgenie?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-pixgenie" 
     target="_blank">
-      <img 
-      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=735037&theme=dark" 
-      alt="PixGenie - Transform&#0032;Images | Product Hunt"
-       width="250" 
-       height="54" 
+      <Image
+        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=735037&theme=dark"
+        alt="PixGenie - Transform&#0032;Images | Product Hunt"
+        width={250}
+        height={54}
       />
     </a>
   </div>

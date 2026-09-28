@@ -19,7 +19,7 @@ const Checkout = ({
   credits: number;
   buyerId: string;
 }) => {
-  const { toast } = useToast();
+  const { toast, dismiss } = useToast();
 
   useEffect(() => {
     loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -29,6 +29,7 @@ const Checkout = ({
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
+      dismiss();
       toast({
         title: "Order placed!",
         description: "You will receive an email confirmation",
@@ -38,6 +39,7 @@ const Checkout = ({
     }
 
     if (query.get("canceled")) {
+      dismiss();
       toast({
         title: "Order canceled!",
         description: "Continue to shop around and checkout when you're ready",
@@ -45,7 +47,7 @@ const Checkout = ({
         className: "error-toast",
       });
     }
-  }, []);
+  }, [toast, dismiss]);
 
   const onCheckout = async () => {
     const transaction = {

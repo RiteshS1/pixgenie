@@ -10,6 +10,9 @@ import { Button } from '../ui/button'
 const Sidebar = () => {
   const pathname = usePathname();
 
+  // Public routes that can be prefetched
+  const publicRoutes = ['/'];
+
   return (
     <aside className="sidebar">
       <div className="flex size-full flex-col gap-3">
@@ -21,13 +24,14 @@ const Sidebar = () => {
           <SignedIn>
             <ul className="sidebar-nav_elements">
               {navLinks.slice(0, 6).map((link) => {
-                const isActive = link.route === pathname
+                const isActive = link.route === pathname;
+                const shouldPrefetch = publicRoutes.includes(link.route);
 
                 return (
                   <li key={link.route} className={`sidebar-nav_element group ${
                     isActive ? 'bg-purple-gradient text-white' : 'text-gray-700'
                   }`}>
-                    <Link className="sidebar-link" href={link.route}>
+                    <Link className="sidebar-link" href={link.route} prefetch={shouldPrefetch ? true : false}>
                       <Image 
                         src={link.icon}
                         alt="logo"
@@ -46,13 +50,14 @@ const Sidebar = () => {
 
             <ul className="sidebar-nav_elements">
               {navLinks.slice(6).map((link) => {
-                const isActive = link.route === pathname
+                const isActive = link.route === pathname;
+                const shouldPrefetch = publicRoutes.includes(link.route);
 
                 return (
                   <li key={link.route} className={`sidebar-nav_element group ${
                     isActive ? 'bg-purple-gradient text-white' : 'text-gray-700'
                   }`}>
-                    <Link className="sidebar-link" href={link.route}>
+                    <Link className="sidebar-link" href={link.route} prefetch={shouldPrefetch ? true : false}>
                       <Image 
                         src={link.icon}
                         alt="logo"

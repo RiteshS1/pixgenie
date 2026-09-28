@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import Header from "@/components/shared/Header";
 import TransformedImage from "@/components/shared/TransformedImage";
@@ -11,6 +12,8 @@ import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
 const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
   const { userId } = auth();
+
+  if (!userId) redirect("/sign-in");
 
   const image = await getImageById(id);
 

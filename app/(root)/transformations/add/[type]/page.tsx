@@ -7,10 +7,10 @@ import { redirect } from 'next/navigation';
 
 const AddTransformationTypePage = async ({ params: { type } }: SearchParamProps) => {
   const { userId } = auth();
+
+  if (!userId) redirect('/sign-in');
+
   const transformation = transformationTypes[type];
-
-  if(!userId) redirect('/sign-in')
-
   const user = await getUserById(userId);
 
   return (
@@ -19,7 +19,7 @@ const AddTransformationTypePage = async ({ params: { type } }: SearchParamProps)
         title={transformation.title}
         subtitle={transformation.subTitle}
       />
-    
+     
       <section className="mt-10">
         <TransformationForm 
           action="Add"

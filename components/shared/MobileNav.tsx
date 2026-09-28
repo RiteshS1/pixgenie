@@ -11,6 +11,9 @@ import { Button } from "../ui/button"
 const MobileNav = () => {
   const pathname = usePathname();
 
+  // Public routes that can be prefetched
+  const publicRoutes = ['/'];
+
   return (
     <header className="header">
       <Link href="/" className="flex items-center gap-2 md:py-2">
@@ -47,14 +50,15 @@ const MobileNav = () => {
 
               <ul className="header-nav_elements">
               {navLinks.map((link) => {
-                const isActive = link.route === pathname
+                const isActive = link.route === pathname;
+                const shouldPrefetch = publicRoutes.includes(link.route);
 
                 return (
                   <li 
                     className={`${isActive && 'gradient-text'} p-18 flex whitespace-nowrap text-dark-700`}
                     key={link.route}
                     >
-                    <Link className="sidebar-link cursor-pointer" href={link.route}>
+                    <Link className="sidebar-link cursor-pointer" href={link.route} prefetch={shouldPrefetch ? true : false}>
                       <Image 
                         src={link.icon}
                         alt="logo"
