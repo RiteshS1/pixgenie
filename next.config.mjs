@@ -6,11 +6,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
         port: ''
-      },
-      {
-        protocol: 'https',
-        hostname: 'api.producthunt.com',
-        port: ''
       }
     ]
   }
