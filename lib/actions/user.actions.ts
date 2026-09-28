@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { currentUser } from "@clerk/nextjs/server";
 
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
@@ -26,7 +27,25 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      // User doesn't exist in DB yet, fetch from Clerk and create
+      const clerkUser = await currentUser();
+      
+      if (!clerkUser || clerkUser.id !== userId) {
+        throw new Error("User not found");
+      }
+
+      const newUser = await User.create({
+        clerkId: clerkUser.id,
+        email: clerkUser.emailAddresses[0]?.emailAddress,
+        username: clerkUser.username || clerkUser.emailAddresses[0]?.emailAddress.split('@')[0],
+        firstName: clerkUser.firstName || "",
+        lastName: clerkUser.lastName || "",
+        photo: clerkUser.imageUrl || "",
+      });
+
+      return JSON.parse(JSON.stringify(newUser));
+    }
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
