@@ -5,6 +5,8 @@ import { getUserById } from '@/lib/actions/user.actions';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 const AddTransformationTypePage = async ({ params: { type } }: SearchParamProps) => {
   const { userId } = auth();
 
